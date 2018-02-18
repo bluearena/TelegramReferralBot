@@ -14,7 +14,8 @@ func start(message *tgbotapi.Message){
 		if user == (User{}){
 			user := User{message.From.ID, message.From.FirstName, generateToken(), 0}
 			db.Create(&user)
-			sendMessage(message.Chat.ID, phrases[0] + " " + phrases[2] +
+			sendMessage(message.Chat.ID, phrases[0] + message.From.UserName + phrases[1], nil)
+			sendMessage(message.Chat.ID, phrases[2] +
 				"\nt.me/" + configuration.BotUsername + "?start=" + user.Token + "\n" + phrases[5], nil)
 		}else {
 			sendMessage(message.Chat.ID, phrases[3], nil)
@@ -31,8 +32,9 @@ func start(message *tgbotapi.Message){
 			}else {
 				user := User{message.From.ID, message.From.FirstName, generateToken(), 0}
 				db.Create(&user)
-				sendMessage(message.Chat.ID, phrases[0] + " " + phrases[2] +
-					"t.me/" + configuration.BotUsername + "?start=" + user.Token + "\n" + phrases[5], nil)
+				sendMessage(message.Chat.ID, phrases[0] + message.From.UserName + phrases[1], nil)
+				sendMessage(message.Chat.ID, phrases[2] +
+					"\nt.me/" + configuration.BotUsername + "?start=" + user.Token + "\n" + phrases[5], nil)
 			}
 		}else {
 			user2 := User{}
@@ -46,8 +48,9 @@ func start(message *tgbotapi.Message){
 
 				user2 = User{message.From.ID, message.From.FirstName, generateToken(), 0}
 				db.Create(&user2)
-				sendMessage(message.Chat.ID, phrases[0] + phrases[1] + user.Username + " " + phrases[2] +
-					"t.me/" + configuration.BotUsername + "?start=" + user2.Token + "\n" + phrases[5], nil)
+				sendMessage(message.Chat.ID, phrases[0] + message.From.UserName + phrases[1], nil)
+				sendMessage(message.Chat.ID, phrases[2] +
+					"\nt.me/" + configuration.BotUsername + "?start=" + user2.Token + "\n" + phrases[5], nil)
 			}
 		}
 	}
